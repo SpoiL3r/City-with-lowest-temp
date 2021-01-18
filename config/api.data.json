@@ -1,0 +1,8 @@
+{
+    "apiKey" : "Insert Weather API Key here", 
+    "googleMaps": {
+        "apiKey": "Insert GoogleMaps API Key here" 
+    },
+    "latitude": 51.1657,
+    "longitude": 10.4515
+}

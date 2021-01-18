@@ -1,0 +1,15 @@
+{
+  "name": "google-map-lowest-temp",
+  "version": "1.0.0",
+  "description": "Lowest temperature in germany displayed on google maps",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vaibhav Singh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

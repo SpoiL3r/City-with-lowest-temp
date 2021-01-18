@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> City with lowest temperature in Germany</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head> 
+<body>
+    <h1>The city with the current lowest temperature in Germany : <div id="cityName"></div> </h1>
+
+
+
+<div id="googleMap"></div>
+<script type="text/javascript">
+    var attempts = 0;
+    function initialize() {
+        const mapCanvas = document.getElementById('googleMap')
+        if(attempts === 0) {
+            attempts = 1;
+            $.get("/temperature/lowest", (data, status) => {
+                
+                const myLatLng = {
+                    lat: data.lowestTemp.coord.lat,
+                    lng: data.lowestTemp.coord.lon
+                }
+    
+                $.ajax({
+                    url: data.googleMapURL,
+                    dataType: "script",
+                    success: ()=> {
+                        const mapProps = {
+                            center: new google.maps.LatLng(myLatLng.lat, myLatLng.lng),
+                            zoom: 10
+                        }
+                        function addMarker(location, map, cityName) {
+                            const marker = new google.maps.Marker({
+                                position: location,
+                                title: " The current lowest temperature is in " + cityName
+                            })
+                            marker.setMap(map)
+                        }
+    
+                        const map = new google.maps.Map(mapCanvas, mapProps)
+                        addMarker(myLatLng, map, data.lowestTemp.name);
+                    }
+                });
+    
+                $('#cityName').html(`${data.lowestTemp.name} (${data.lowestTemp.main.temp_min} °C)`);
+            });
+        }
+    }
+
+    initialize();
+</script>
+
+
+
+<style>
+    #googleMap {
+        height: 825px;
+        width: 100%;
+        margin: 5px
+    }
+    #cityName { display:inline; }
+    h1 {
+        
+        display: inline
+    }
+</style>
+
+</body>
+</html>
